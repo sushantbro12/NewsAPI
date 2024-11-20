@@ -31,7 +31,7 @@ const NewsFeed = ({ query, setQuery }) => {
         type="text"
         placeholder="Search news..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)} // Allow user to update the query
+        onChange={(e) => setQuery(e.target.value)}
         className="w-full p-3 mb-6 border border-gray-300 rounded-lg text-lg"
       />
 
