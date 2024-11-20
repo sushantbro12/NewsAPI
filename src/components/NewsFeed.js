@@ -39,13 +39,20 @@ const NewsFeed = ({ query, setQuery }) => {
         {data?.articles.map((article, index) => (
           <li key={index} className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
-            {article.urlToImage && (
+            {article.urlToImage ? (
               <img
                 src={article.urlToImage}
                 alt={article.title}
-                className="w-full h-auto mb-4 rounded-lg"
+                className="w-full h-96 mb-4 rounded-lg"
+              />
+            ) : (
+              <img
+                src="https://picsum.photos/200/300/?blur=2"
+                alt="Placeholder"
+                className="w-full h-96 mb-4 rounded-lg"
               />
             )}
+
             <p className="text-lg mb-4">{article.description}</p>
             <a
               href={article.url}
