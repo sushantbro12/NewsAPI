@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_KEY = "dcc4814b9d3943eeba6fb7ad169f87c7";
+// const API_KEY = "dcc4814b9d3943eeba6fb7ad169f87c7";
+const API_KEY = "f23dcae29a964b7ea596639533a5a523";
 
 export const fetchNews = async (query, page = 1) => {
   const pageSize = 10;

@@ -1,15 +1,6 @@
-import React, { useState, useEffect } from "react";
-
 const categories = ["Science", "Art", "Politics", "Technology"];
 
-const UserPreferences = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  useEffect(() => {
-    const savedPreference = localStorage.getItem("userPreference") || "";
-    setSelectedCategory(savedPreference);
-  }, []);
-
+const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     localStorage.setItem("userPreference", category);

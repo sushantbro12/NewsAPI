@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { fetchNews } from "../api/fetchNews";
 
-const NewsFeed = () => {
-  const [query, setQuery] = useState("science");
+const NewsFeed = ({ query, setQuery }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, isError } = useQuery(
@@ -18,6 +17,7 @@ const NewsFeed = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    window.scrollTo(0, 0);
   };
 
   if (isLoading) return <p>Loading...</p>;
@@ -31,7 +31,7 @@ const NewsFeed = () => {
         type="text"
         placeholder="Search news..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)} // Allow user to update the query
         className="w-full p-3 mb-6 border border-gray-300 rounded-lg text-lg"
       />
 
