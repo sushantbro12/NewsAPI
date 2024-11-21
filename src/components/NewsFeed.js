@@ -93,11 +93,20 @@ const NewsFeed = () => {
             {data.articles.map((article, index) => (
               <li key={index} className="bg-white p-4 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
-                <img
-                  src={article.urlToImage}
-                  alt={article.title}
-                  className="w-full h-96 mb-4 rounded-lg"
-                />
+
+                {article.urlToImage && (
+                  <img
+                    src={
+                      article.urlToImage ||
+                      "https://picsum.photos/500/300?random"
+                    }
+                    alt={article.title}
+                    className="w-full h-96 mb-4 rounded-lg"
+                    onError={(e) =>
+                      (e.target.src = "https://picsum.photos/500/300?random")
+                    }
+                  />
+                )}
                 <p className="text-lg mb-4">{article.description}</p>
                 <a
                   href={article.url}

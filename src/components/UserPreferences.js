@@ -6,7 +6,6 @@ const categories = ["Science", "Art", "Politics", "Technology", "Sports"];
 const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [preferences, setPreferences] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const savedPreferences =
@@ -15,9 +14,7 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
   }, []);
 
   const handleCategoryClick = (category) => {
-    setLoading(true);
     setSelectedCategory(category);
-    setTimeout(() => setLoading(false), 1000);
   };
 
   const toggleButton = () => {
@@ -37,26 +34,32 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
     setIsOpen(false);
   };
 
+  const handleScrollTop = () => {
+    window.scrollTo(0, 0);
+  };
   return (
     <>
-      <nav className="flex items-center justify-between bg-blue-900 text-white px-6 py-4 shadow-md">
+      <nav className="flex items-center justify-between sticky top-0 z-10 bg-blue-800 text-white px-6 py-4 shadow-md">
         <div className="flex items-center space-x-8">
           <Link
+            onClick={handleScrollTop}
             to="/"
-            className="text-2xl font-extrabold tracking-tight hover:text-blue-400"
+            className="text-3xl font-extrabold tracking-tight hover:text-blue-200 transition duration-300"
           >
             NewsApp
           </Link>
           <div className="flex space-x-6">
             <Link
+              onClick={handleScrollTop}
               to="/favourites"
-              className="text-lg font-medium hover:text-blue-400 transition duration-300"
+              className="text-lg font-medium hover:text-blue-200 transition duration-300"
             >
               Favourites
             </Link>
             <Link
+              onClick={handleScrollTop}
               to="/bookmarks"
-              className="text-lg font-medium hover:text-blue-400 transition duration-300"
+              className="text-lg font-medium hover:text-blue-200 transition duration-300"
             >
               Bookmarks
             </Link>
@@ -70,20 +73,17 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
               onClick={() => handleCategoryClick(category)}
               className={`px-4 py-2 rounded-lg font-medium transition duration-300 ${
                 selectedCategory === category
-                  ? "bg-blue-500 text-white"
-                  : "hover:bg-gray-700 text-gray-300"
+                  ? "bg-blue-700 text-white"
+                  : "hover:bg-blue-500 text-blue-100"
               }`}
-              disabled={loading}
             >
-              {loading && selectedCategory === category
-                ? "Loading..."
-                : category}
+              {category}
             </button>
           ))}
 
           <button
             onClick={toggleButton}
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-800 rounded-md text-white font-medium transition duration-300"
+            className="px-4 py-2 bg-gray-800 hover:bg-gray-900 rounded-md text-white font-medium transition duration-300"
           >
             Preferences
           </button>
@@ -103,7 +103,7 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
                   id={category}
                   checked={preferences.includes(category)}
                   onChange={() => handleCheckboxChange(category)}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-blue-500 focus:ring-blue-500"
                 />
                 <label htmlFor={category} className="text-lg text-gray-700">
                   {category}
@@ -113,7 +113,7 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
           </div>
           <button
             onClick={savePreferences}
-            className="mt-6 w-full px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300"
+            className="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300"
           >
             Save Preferences
           </button>
