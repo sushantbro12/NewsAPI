@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import NewsFeed from "./components/NewsFeed";
 import UserPreferences from "./components/UserPreferences";
+import Favourite from "./components/Favourite";
+import Bookmarks from "./components/Bookmarks";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -25,6 +27,8 @@ function App() {
         setSelectedCategory={setSelectedCategory}
       />
       <NewsFeed query={query} setQuery={setQuery} />
+      <Favourite />
+      <Bookmarks />
     </>
   );
 }

@@ -1,10 +1,40 @@
 import React, { useState, useDeferredValue, useEffect } from "react";
 import useNewsQuery from "../customHooks/useNewsQuery";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavourite, removeFavourite } from "../redux/favouriteSlice";
 
 const NewsFeed = ({ query, setQuery }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [isFetching, setIsFetching] = useState(false);
+  const dispatch = useDispatch();
+  const favourites = useSelector((state) => state.favourites);
+  const [bookmarks, setBookmarks] = React.useState(
+    JSON.parse(localStorage.getItem("bookmarks")) || []
+  );
+
+  const isFavourite = (article) =>
+    favourites.some((fav) => fav.url === article.url);
+
+  const isBookmarked = (article) =>
+    bookmarks.some((bookm) => bookm.url === article.url);
+
+  const toggleFavourite = (article) => {
+    if (isFavourite(article)) {
+      dispatch(removeFavourite(article.url));
+    } else {
+      dispatch(addFavourite(article));
+    }
+  };
+
+  const toggleBookmark = (article) => {
+    const updatedBookmarks = isBookmarked(article)
+      ? bookmarks.filter((bookm) => bookm.url !== article.url)
+      : [...bookmarks, article];
+
+    setBookmarks(updatedBookmarks);
+    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
+  };
 
   useEffect(() => {
     setIsFetching(true);
@@ -65,6 +95,30 @@ const NewsFeed = ({ query, setQuery }) => {
                 >
                   Read More
                 </a>
+                <div className="mt-4 flex space-x-4">
+                  <button
+                    onClick={() => toggleFavourite(article)}
+                    className={`px-4 py-2 rounded-lg ${
+                      isFavourite(article)
+                        ? "bg-red-500 text-white"
+                        : "bg-gray-200"
+                    }`}
+                  >
+                    {isFavourite(article) ? "Unfavorite" : "Favorite"}
+                  </button>
+
+                  <button
+                    className={`px-4 py-2 rounded-lg ${
+                      isBookmarked(article)
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200"
+                    }`}
+                    onClick={() => toggleBookmark(article)}
+                  >
+                    {" "}
+                    {isBookmarked(article) ? "Remove Bookmark" : "Bookmark"}
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
