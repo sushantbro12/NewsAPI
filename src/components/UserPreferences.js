@@ -37,6 +37,7 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
   const handleScrollTop = () => {
     window.scrollTo(0, 0);
   };
+
   return (
     <>
       <nav className="flex items-center justify-between sticky top-0 z-10 bg-blue-800 text-white px-6 py-4 shadow-md">
@@ -48,7 +49,7 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
           >
             NewsApp
           </Link>
-          <div className="flex space-x-6">
+          <div className="hidden md:flex space-x-6">
             <Link
               onClick={handleScrollTop}
               to="/favourites"
@@ -63,23 +64,32 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
             >
               Bookmarks
             </Link>
+            <Link
+              onClick={handleScrollTop}
+              to="/trending"
+              className="text-lg font-medium hover:text-blue-200 transition duration-300"
+            >
+              Trending News
+            </Link>
           </div>
         </div>
 
         <div className="flex items-center space-x-4">
-          {preferences.map((category) => (
-            <button
-              key={category}
-              onClick={() => handleCategoryClick(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition duration-300 ${
-                selectedCategory === category
-                  ? "bg-blue-700 text-white"
-                  : "hover:bg-blue-500 text-blue-100"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          <div className="hidden sm:flex space-x-4">
+            {preferences.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+                className={`px-4 py-2 rounded-lg font-medium transition duration-300 ${
+                  selectedCategory === category
+                    ? "bg-blue-700 text-white"
+                    : "hover:bg-blue-500 text-blue-100"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
 
           <button
             onClick={toggleButton}
@@ -91,7 +101,7 @@ const UserPreferences = ({ selectedCategory, setSelectedCategory }) => {
       </nav>
 
       {isOpen && (
-        <div className="absolute top-0 right-0 mt-16 bg-white p-6 rounded-lg shadow-lg w-72 max-w-sm">
+        <div className="absolute top-0 right-0 mt-16 bg-white p-6 rounded-lg shadow-lg w-72 max-w-sm sm:w-96 md:w-80">
           <h2 className="text-xl font-semibold mb-4 text-gray-800">
             User Preferences
           </h2>

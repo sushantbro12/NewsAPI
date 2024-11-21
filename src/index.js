@@ -10,6 +10,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Favourite from "./components/Favourite";
 import Bookmarks from "./components/Bookmarks";
 import { NewsProvider } from "./context/NewsContext";
+import TrendingNews from "./components/TrendingNews";
+import NewsFeed from "./components/NewsFeed";
 
 const queryClient = new QueryClient();
 
@@ -18,8 +20,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+      { path: "/", element: <NewsFeed /> },
       { path: "/favourites", element: <Favourite /> },
       { path: "/bookmarks", element: <Bookmarks /> },
+      { path: "/trending", element: <TrendingNews /> },
     ],
   },
 ]);

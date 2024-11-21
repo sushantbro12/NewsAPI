@@ -5,7 +5,6 @@ import UserPreferences from "./components/UserPreferences";
 
 import { Outlet } from "react-router-dom";
 import { NewsContext } from "./context/NewsContext";
-import NewsFeed from "./components/NewsFeed";
 
 function App() {
   const { selectedCategory, setSelectedCategory } = useContext(NewsContext);
@@ -17,7 +16,6 @@ function App() {
         setSelectedCategory={setSelectedCategory}
       />
       <Outlet />
-      <NewsFeed />
     </div>
   );
 }

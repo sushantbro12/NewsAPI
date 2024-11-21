@@ -94,14 +94,6 @@ const NewsFeed = () => {
               <li key={index} className="bg-white p-4 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
 
-                {/* {article.urlToImage && (
-                  <img
-                    src={article.urlToImage || "https://picsum.photos/200/300"}
-                    alt={article.title}
-                    className="w-full h-96 mb-4 rounded-lg"
-                  />
-                )} */}
-
                 {article.urlToImage ? (
                   <img
                     src={article.urlToImage}
@@ -115,7 +107,7 @@ const NewsFeed = () => {
                   <img
                     src="https://picsum.photos/200/300"
                     alt="Fallback"
-                    className="w-full h-96 mb-4 rounded-lg object-cover"
+                    className="w-full h-96 mb-4 rounded-lg object-fill"
                   />
                 )}
 
