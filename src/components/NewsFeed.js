@@ -1,15 +1,23 @@
-import React, { useState, useDeferredValue, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useDeferredValue,
+} from "react";
 import useNewsQuery from "../customHooks/useNewsQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavourite, removeFavourite } from "../redux/favouriteSlice";
 
-const NewsFeed = ({ query, setQuery }) => {
+import { NewsContext } from "../context/NewsContext";
+
+const NewsFeed = () => {
+  const { query, setQuery } = useContext(NewsContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [isFetching, setIsFetching] = useState(false);
   const dispatch = useDispatch();
   const favourites = useSelector((state) => state.favourites);
-  const [bookmarks, setBookmarks] = React.useState(
+  const [bookmarks, setBookmarks] = useState(
     JSON.parse(localStorage.getItem("bookmarks")) || []
   );
 
@@ -28,9 +36,13 @@ const NewsFeed = ({ query, setQuery }) => {
   };
 
   const toggleBookmark = (article) => {
-    const updatedBookmarks = isBookmarked(article)
-      ? bookmarks.filter((bookm) => bookm.url !== article.url)
-      : [...bookmarks, article];
+    let updatedBookmarks;
+
+    if (isBookmarked(article)) {
+      updatedBookmarks = bookmarks.filter((bookm) => bookm.url !== article.url);
+    } else {
+      updatedBookmarks = [...bookmarks, article];
+    }
 
     setBookmarks(updatedBookmarks);
     localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
@@ -115,7 +127,6 @@ const NewsFeed = ({ query, setQuery }) => {
                     }`}
                     onClick={() => toggleBookmark(article)}
                   >
-                    {" "}
                     {isBookmarked(article) ? "Remove Bookmark" : "Bookmark"}
                   </button>
                 </div>

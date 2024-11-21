@@ -1,35 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import "./App.css";
-import NewsFeed from "./components/NewsFeed";
+
 import UserPreferences from "./components/UserPreferences";
-import Favourite from "./components/Favourite";
-import Bookmarks from "./components/Bookmarks";
+
+import { Outlet } from "react-router-dom";
+import { NewsContext } from "./context/NewsContext";
+import NewsFeed from "./components/NewsFeed";
 
 function App() {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [query, setQuery] = useState("science");
-
-  useEffect(() => {
-    const savedPreference = localStorage.getItem("userPreference") || "";
-    setSelectedCategory(savedPreference);
-  }, []);
-
-  useEffect(() => {
-    if (selectedCategory) {
-      setQuery(selectedCategory);
-    }
-  }, [selectedCategory]);
+  const { selectedCategory, setSelectedCategory } = useContext(NewsContext);
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-100">
       <UserPreferences
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-      <NewsFeed query={query} setQuery={setQuery} />
-      <Favourite />
-      <Bookmarks />
-    </>
+      <Outlet />
+      <NewsFeed />
+    </div>
   );
 }
 
