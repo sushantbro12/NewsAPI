@@ -94,19 +94,31 @@ const NewsFeed = () => {
               <li key={index} className="bg-white p-4 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
 
-                {article.urlToImage && (
+                {/* {article.urlToImage && (
                   <img
-                    src={
-                      article.urlToImage ||
-                      "https://picsum.photos/500/300?random"
-                    }
+                    src={article.urlToImage || "https://picsum.photos/200/300"}
                     alt={article.title}
                     className="w-full h-96 mb-4 rounded-lg"
-                    onError={(e) =>
-                      (e.target.src = "https://picsum.photos/500/300?random")
-                    }
+                  />
+                )} */}
+
+                {article.urlToImage ? (
+                  <img
+                    src={article.urlToImage}
+                    alt={article.title}
+                    className="w-full h-96 mb-4 rounded-lg object-cover"
+                    onError={(e) => {
+                      e.target.src = "https://picsum.photos/200/300";
+                    }}
+                  />
+                ) : (
+                  <img
+                    src="https://picsum.photos/200/300"
+                    alt="Fallback"
+                    className="w-full h-96 mb-4 rounded-lg object-cover"
                   />
                 )}
+
                 <p className="text-lg mb-4">{article.description}</p>
                 <a
                   href={article.url}
