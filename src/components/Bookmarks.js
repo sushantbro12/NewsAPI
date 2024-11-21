@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Bookmarks = () => {
-  const [bookmarks, setBookmarks] = React.useState(
-    JSON.parse(localStorage.getItem("bookmarks")) || []
-  );
+  const [bookmarks, setBookmarks] = useState([]);
+
+  useEffect(() => {
+    setBookmarks(JSON.parse(localStorage.getItem("bookmarks")) || []);
+  }, [bookmarks]);
 
   return (
     <div>
