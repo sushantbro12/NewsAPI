@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useTrendingNews from "../customHooks/useTrendingNews";
+import { LazyImage } from "../utils/LazyImage";
 
 const TrendingNews = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,22 +32,11 @@ const TrendingNews = () => {
               <li key={index} className="bg-white p-4 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
 
-                {article.urlToImage ? (
-                  <img
-                    src={article.urlToImage}
-                    alt={article.title}
-                    className="w-full h-96 mb-4 rounded-lg object-cover"
-                    onError={(e) => {
-                      e.target.src = "https://picsum.photos/200/300";
-                    }}
-                  />
-                ) : (
-                  <img
-                    src="https://picsum.photos/200/300"
-                    alt="Fallback"
-                    className="w-full h-96 mb-4 rounded-lg object-fill"
-                  />
-                )}
+                <LazyImage
+                  src={article.urlToImage}
+                  alt={article.title}
+                  fallback="https://picsum.photos/200/300"
+                />
 
                 <p className="text-lg mb-4">{article.description}</p>
                 <a
